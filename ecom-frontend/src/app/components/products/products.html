@@ -1,0 +1,58 @@
+<div class="container">
+    <h2>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        Produits
+    </h2>
+
+    <div *ngIf="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Chargement des produits...</p>
+    </div>
+
+    <div *ngIf="error" class="error">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        {{ error }}
+    </div>
+
+    <div *ngIf="!loading && !error" class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Produit</th>
+                    <th>Prix</th>
+                    <th>Stock</th>
+                    <th>Statut</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let product of products">
+                    <td style="font-family: monospace; color: #6b7280;">{{ product.id }}</td>
+                    <td style="font-weight: 500;">{{ product.name }}</td>
+                    <td style="font-weight: 600; color: #4f46e5;">{{ product.price | currency:'EUR' }}</td>
+                    <td>{{ product.quantity }}</td>
+                    <td>
+                        <span class="badge"
+                            [ngClass]="{'badge-success': product.quantity > 10, 'badge-warning': product.quantity <= 10 && product.quantity > 0, 'badge-danger': product.quantity === 0}">
+                            {{ product.quantity > 10 ? 'En stock' : (product.quantity === 0 ? 'Rupture' : 'Faible') }}
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="!loading && !error && products.length === 0" class="no-data">
+        Aucun produit trouvé
+    </div>
+</div>

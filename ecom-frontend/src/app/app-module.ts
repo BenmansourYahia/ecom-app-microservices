@@ -9,6 +9,7 @@ import { ProductsComponent } from './components/products/products';
 import { BillsComponent } from './components/bills/bills';
 import { ChatbotComponent } from './components/chatbot/chatbot';
 import { FormsModule } from '@angular/forms';
+import { keycloakProviders, provideHttpClientWithAuth } from './keycloak.config';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { FormsModule } from '@angular/forms';
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideHttpClient(withInterceptorsFromDi())
+    provideHttpClientWithAuth(),
+    ...keycloakProviders
   ],
   bootstrap: [App]
 })

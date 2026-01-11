@@ -1,0 +1,73 @@
+<div class="chatbot-container" [class.open]="isOpen">
+    <!-- Chat Toggle Button -->
+    <button class="chat-toggle" (click)="toggleChat()" *ngIf="!isOpen">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <span class="badge" *ngIf="messages.length > 1">{{ messages.length - 1 }}</span>
+    </button>
+
+    <!-- Chat Window -->
+    <div class="chat-window" *ngIf="isOpen">
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="header-content">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+                <span>Assistant E-commerce</span>
+            </div>
+            <button class="close-btn" (click)="toggleChat()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Messages -->
+        <div class="chat-messages">
+            <div *ngFor="let message of messages" class="message" [class.user-message]="message.role === 'user'"
+                [class.assistant-message]="message.role === 'assistant'">
+                <div class="message-content">
+                    <div class="message-avatar" *ngIf="message.role === 'assistant'">🤖</div>
+                    <div class="message-bubble">
+                        <p>{{ message.content }}</p>
+                        <span class="message-time">{{ message.timestamp | date:'HH:mm' }}</span>
+                    </div>
+                    <div class="message-avatar" *ngIf="message.role === 'user'">👤</div>
+                </div>
+            </div>
+
+            <!-- Loading indicator -->
+            <div class="message assistant-message" *ngIf="isLoading">
+                <div class="message-content">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-bubble loading">
+                        <div class="typing-indicator">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input -->
+        <div class="chat-input">
+            <input type="text" [(ngModel)]="userInput" (keypress)="onKeyPress($event)"
+                placeholder="Posez votre question..." [disabled]="isLoading" />
+            <button (click)="sendMessage()" [disabled]="!userInput.trim() || isLoading" class="send-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>

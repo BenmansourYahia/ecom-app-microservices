@@ -18,3 +18,11 @@ spring:
           uri: lb://CHATBOTAI
           predicates:
             Path= /api/chat/**
+        - id: r5
+          uri: lb://CHATBOT-SERVICE
+          predicates:
+            Path= /chat/**
+        - id: r6
+          uri: lb://KAFKA-SERVICE
+          predicates:
+            Path= /api/events/**

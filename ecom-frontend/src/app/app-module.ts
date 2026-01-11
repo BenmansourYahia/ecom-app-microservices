@@ -7,17 +7,21 @@ import { App } from './app';
 import { CustomersComponent } from './components/customers/customers';
 import { ProductsComponent } from './components/products/products';
 import { BillsComponent } from './components/bills/bills';
+import { ChatbotComponent } from './components/chatbot/chatbot';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     App,
     CustomersComponent,
     ProductsComponent,
-    BillsComponent
+    BillsComponent,
+    ChatbotComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
